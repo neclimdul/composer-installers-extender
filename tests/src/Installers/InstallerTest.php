@@ -5,7 +5,9 @@ declare(strict_types = 1);
 namespace OomphInc\ComposerInstallersExtender\Installers;
 
 use Composer\Composer;
+use Composer\Config;
 use Composer\IO\IOInterface;
+use Composer\Package\RootPackage;
 use PHPUnit\Framework\TestCase;
 use Composer\Package\Package;
 
@@ -22,10 +24,8 @@ class InstallerTest extends TestCase
         $this->composer = $this->createMock(Composer::class);
         $this->composer
             ->method('getConfig')
-            ->willReturn(new class {
-                public function get($name) {
-                    return null;
-                }
+            ->willReturn(new class extends Config
+            {
             });
 
         $this->io = $this->createMock(IOInterface::class);
@@ -35,17 +35,12 @@ class InstallerTest extends TestCase
     {
         $this->composer
             ->method('getPackage')
-            ->willReturn(new class {
-                public function getExtra()
-                {
-                    return [
-                        'installer-types' => ['custom-type'],
-                        'installer-paths' => [
-                            'custom/path/{$name}' => ['type:custom-type'],
-                        ],
-                    ];
-                }
-            });
+            ->willReturn($this->mockRootPackage([
+                'installer-types' => ['custom-type'],
+                'installer-paths' => [
+                    'custom/path/{$name}' => ['type:custom-type'],
+                ],
+            ]));
 
         $installer = new Installer($this->io, $this->composer);
 
@@ -56,6 +51,13 @@ class InstallerTest extends TestCase
             'custom/path/test',
             $installer->getInstallPath($package)
         );
+    }
+
+    private function mockRootPackage($values)
+    {
+        $package = new RootPackage('test', 'version', 'version');
+        $package->setExtra($values);
+        return $package;
     }
 
     public function testSupports(): void
@@ -90,26 +92,16 @@ class InstallerTest extends TestCase
     {
         return [
             [
-                new class {
-                    public function getExtra(): array
-                    {
-                        return [
-                            'installer-types' => ['custom-type'],
-                            'installer-paths' => [
-                                'custom/path/{$name}' => ['type:custom-type'],
-                            ],
-                        ];
-                    }
-                },
+                $this->mockRootPackage([
+                    'installer-types' => ['custom-type'],
+                    'installer-paths' => [
+                        'custom/path/{$name}' => ['type:custom-type'],
+                    ],
+                ]),
                 ['custom-type'],
             ],
             [
-                new class {
-                    public function getExtra(): array
-                    {
-                        return [];
-                    }
-                },
+                $this->mockRootPackage([]),
                 [],
             ],
         ];

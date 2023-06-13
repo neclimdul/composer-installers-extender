@@ -14,7 +14,7 @@ class CustomInstallerTest extends TestCase
         $installer = (new \ReflectionClass(CustomInstaller::class))
             ->newInstanceWithoutConstructor();
         $this->assertSame(
-            [ false ],
+            [ 0 => false, '' => false],
             $installer->getLocations()
         );
     }
