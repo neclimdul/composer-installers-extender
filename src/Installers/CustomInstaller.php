@@ -18,7 +18,7 @@ class CustomInstaller extends BaseInstaller
     /**
      * {@inheritDoc}
      */
-    public function getLocations(string $frameworkType = null)
+    public function getLocations(?string $frameworkType = null)
     {
         /* In some cases where installers use 'library' or other non namespaced
          * types composer will fail to handle the installer, but this project is
