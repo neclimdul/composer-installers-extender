@@ -1,20 +1,23 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace OomphInc\ComposerInstallersExtender\Tests\Installers;
+namespace NecLimDul\ComposerInstallerExtender\Tests\Installers;
 
+use NecLimDul\ComposerInstallersExtender\Installers\CustomInstaller;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use OomphInc\ComposerInstallersExtender\Installers\CustomInstaller;
 
+#[CoversClass(CustomInstaller::class)]
 class CustomInstallerTest extends TestCase
 {
     public function testLocations(): void
     {
-        $installer = (new \ReflectionClass(CustomInstaller::class))
-            ->newInstanceWithoutConstructor();
+        $installer = (new \ReflectionClass(
+            CustomInstaller::class
+        ))->newInstanceWithoutConstructor();
         $this->assertSame(
-            [ 0 => false, '' => false],
+            ['' => ''],
             $installer->getLocations()
         );
     }

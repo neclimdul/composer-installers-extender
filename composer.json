@@ -1,7 +1,7 @@
 {
     "name": "neclimdul/composer-installers-extender",
     "description": "Extend the composer/installers plugin to accept any arbitrary package type.",
-    "homepage": "http://www.oomphinc.com/",
+    "homepage": "http://nerdpalace.net/",
     "type": "composer-plugin",
     "license": "MIT",
     "authors": [
@@ -21,7 +21,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/oomphinc/composer-installers-extender/issues"
+        "issues": "https://github.com/neclimdul/composer-installers-extender/issues"
     },
     "require": {
         "php": ">=8.1",
@@ -30,7 +30,12 @@
     },
     "require-dev": {
         "composer/composer": "^2.0",
-        "phpunit/phpunit": "^7.2 || ^8.0 || ^9.0",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-mockery": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpunit/phpunit": "^12.0",
+        "rector/rector": "^2.0",
         "squizlabs/php_codesniffer": "^3.3"
     },
     "replace": {
@@ -38,12 +43,12 @@
     },
     "autoload":{
         "psr-4": {
-            "OomphInc\\ComposerInstallersExtender\\": "src/"
+            "NecLimDul\\ComposerInstallersExtender\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "OomphInc\\ComposerInstallerExtender\\Tests\\": "tests/src/"
+            "NecLimDul\\ComposerInstallerExtender\\Tests\\": "tests/src/"
         }
     },
     "scripts": {
@@ -54,11 +59,12 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "composer/installers": true
+            "composer/installers": true,
+            "phpstan/extension-installer": true
         }
     },
     "extra": {
-        "class": "OomphInc\\ComposerInstallersExtender\\Plugin"
+        "class": "NecLimDul\\ComposerInstallersExtender\\Plugin"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

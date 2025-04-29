@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace OomphInc\ComposerInstallersExtender;
+namespace NecLimDul\ComposerInstallersExtender;
 
 use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
-use OomphInc\ComposerInstallersExtender\Installers\Installer;
+use NecLimDul\ComposerInstallersExtender\Installers\Installer;
 
 class Plugin implements PluginInterface
 {

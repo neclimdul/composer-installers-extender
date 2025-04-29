@@ -1,8 +1,8 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace OomphInc\ComposerInstallersExtender\Installers;
+namespace NecLimDul\ComposerInstallersExtender\Installers;
 
 use Composer\Package\PackageInterface;
 use Composer\Installer\LibraryInstaller;
@@ -13,15 +13,16 @@ class Installer extends InstallerBase
     /**
      * A list of installer types.
      *
-     * @var array
+     * @var string[]
      */
-    protected $installerTypes;
+    protected array $installerTypes;
 
     /**
      * {@inheritDoc}
      */
     public function getInstallPath(PackageInterface $package): string
     {
+        /** @phpstan-ignore argument.type */
         $installer = new CustomInstaller($package, $this->composer, $this->io);
         $path = $installer->getInstallPath($package, $package->getType());
 
@@ -39,11 +40,11 @@ class Installer extends InstallerBase
     /**
      * Get a list of custom installer types.
      *
-     * @return array
+     * @return string[]
      */
     public function getInstallerTypes(): array
     {
-        if (!$this->installerTypes) {
+        if (!isset($this->installerTypes)) {
             $extra = $this->composer->getPackage()->getExtra();
             $this->installerTypes = $extra['installer-types'] ?? [];
         }

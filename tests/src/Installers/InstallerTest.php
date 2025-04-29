@@ -1,21 +1,26 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace OomphInc\ComposerInstallersExtender\Installers;
+namespace NecLimDul\ComposerInstallerExtender\Tests\Installers;
 
 use Composer\Composer;
 use Composer\Config;
 use Composer\IO\IOInterface;
 use Composer\Package\RootPackage;
+use NecLimDul\ComposerInstallersExtender\Installers\Installer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Composer\Package\Package;
 
+#[CoversClass(Installer::class)]
 class InstallerTest extends TestCase
 {
-    protected $composer;
+    protected Composer&MockObject $composer;
 
-    protected $io;
+    protected IOInterface&MockObject $io;
 
     public function setUp(): void
     {
@@ -35,7 +40,7 @@ class InstallerTest extends TestCase
     {
         $this->composer
             ->method('getPackage')
-            ->willReturn($this->mockRootPackage([
+            ->willReturn(self::mockRootPackage([
                 'installer-types' => ['custom-type'],
                 'installer-paths' => [
                     'custom/path/{$name}' => ['type:custom-type'],
@@ -53,7 +58,10 @@ class InstallerTest extends TestCase
         );
     }
 
-    private function mockRootPackage($values)
+    /**
+     * @param mixed[] $values
+     */
+    private static function mockRootPackage(array $values): RootPackage
     {
         $package = new RootPackage('test', 'version', 'version');
         $package->setExtra($values);
@@ -63,7 +71,9 @@ class InstallerTest extends TestCase
     public function testSupports(): void
     {
         $installer = new class extends Installer {
-            public function __construct() {}
+            public function __construct()
+            {
+            }
 
             public function getInstallerTypes(): array
             {
@@ -76,9 +86,11 @@ class InstallerTest extends TestCase
     }
 
     /**
-     * @dataProvider installerTypesDataProvider
+     * @param \Composer\Package\RootPackage $package
+     * @param string[] $expected
      */
-    public function testGetInstallerTypes($package, array $expected): void
+    #[DataProvider('installerTypesDataProvider')]
+    public function testGetInstallerTypes(RootPackage $package, array $expected): void
     {
         $this->composer
             ->method('getPackage')
@@ -88,11 +100,14 @@ class InstallerTest extends TestCase
         $this->assertEquals($expected, $installer->getInstallerTypes());
     }
 
-    public function installerTypesDataProvider(): array
+    /**
+     * @return array{\Composer\Package\RootPackage,string[]}[]
+     */
+    public static function installerTypesDataProvider(): array
     {
         return [
             [
-                $this->mockRootPackage([
+                self::mockRootPackage([
                     'installer-types' => ['custom-type'],
                     'installer-paths' => [
                         'custom/path/{$name}' => ['type:custom-type'],
@@ -101,7 +116,7 @@ class InstallerTest extends TestCase
                 ['custom-type'],
             ],
             [
-                $this->mockRootPackage([]),
+                self::mockRootPackage([]),
                 [],
             ],
         ];

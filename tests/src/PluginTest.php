@@ -1,23 +1,26 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace OomphInc\ComposerInstallersExtender\Tests;
+namespace NecLimDul\ComposerInstallerExtender\Tests;
 
 use Composer\Composer;
 use Composer\Config;
 use Composer\IO\IOInterface;
 use Composer\Package\RootPackage;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Composer\Installer\InstallationManager;
-use OomphInc\ComposerInstallersExtender\Installers\Installer;
-use OomphInc\ComposerInstallersExtender\Plugin;
+use NecLimDul\ComposerInstallersExtender\Installers\Installer;
+use NecLimDul\ComposerInstallersExtender\Plugin;
 
+#[CoversClass(Plugin::class)]
 class PluginTest extends TestCase
 {
-    protected $composer;
+    protected Composer&MockObject $composer;
 
-    protected $io;
+    protected IOInterface&MockObject $io;
 
     public function setUp(): void
     {

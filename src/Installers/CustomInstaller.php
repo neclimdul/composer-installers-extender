@@ -1,8 +1,8 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace OomphInc\ComposerInstallersExtender\Installers;
+namespace NecLimDul\ComposerInstallersExtender\Installers;
 
 use Composer\Installers\BaseInstaller;
 
@@ -18,16 +18,12 @@ class CustomInstaller extends BaseInstaller
     /**
      * {@inheritDoc}
      */
-    public function getLocations(?string $frameworkType = null)
+    public function getLocations(?string $frameworkType = null): array
     {
         /* In some cases where installers use 'library' or other non namespaced
          * types composer will fail to handle the installer, but this project is
          * specifically supporting that case, so this works around composer.
-         *
-         * In PHP 7.x, composer will be looking for a key of FALSE, which
-         * evaluates to 0. In PHP 8.x, composer will be looking for a key of "".
-         * A value of false signals the installer to use the default path.
          */
-        return [ 0 => false, '' => false ];
+        return [ '' => '' ];
     }
 }
