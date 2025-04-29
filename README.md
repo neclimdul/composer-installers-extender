@@ -1,5 +1,3 @@
-NOTE: This is a temporary fork of the main package to allow testing of the installer name fix from https://github.com/oomphinc/composer-installers-extender/issues/26. This is not a permanent repo and you should follow that issue because some day it will go away.
-
 # Composer Installers Extender
 
 The `composer-installers-extender` is a plugin for [Composer][] that allows
@@ -16,17 +14,17 @@ their explicit install path mapping and token replacement of package properties.
 
 ## How to Install
 
-Add `oomphinc/composer-installers-extender` as a dependency of your project:
+Add `neclimdul/composer-installers-extender` as a dependency of your project:
 
 ```bash
-$ composer require oomphinc/composer-installers-extender
+$ composer require neclimdul/composer-installers-extender
 ```
 
 This plugin requires at least PHP 7.1. If you're using a lower version of PHP
 use the latest stable 1.x release:
 
 ```bash
-$ composer require oomphinc/composer-installers-extender:^1.1
+$ composer require neclimdul/composer-installers-extender:^1.1
 ```
 
 ## How to Use
